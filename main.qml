@@ -12,13 +12,21 @@ Window {
 
     Console
     {
-
+        id : console_
     }
 
     Map
     {
+        id : map_main
         x:400
         y:0
+    }
+
+    Map
+    {
+        id : map_debug
+        x:400
+        y:240
     }
 
     title: qsTr("Bytes")

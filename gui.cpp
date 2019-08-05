@@ -16,4 +16,5 @@ void GUI::registerObject(QObject *obj, const QString &qmlName)
 void GUI::run()
 {
     engine_.load("qrc:/main.qml");
+    engine_.rootObjects();
 }

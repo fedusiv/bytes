@@ -10,8 +10,9 @@ Item {
 
         TextArea
         {
+            id : area
                 style: TextAreaStyle {
-                    textColor: "#333"
+                    textColor: "yellow"
                     selectionColor: "steelblue"
                     selectedTextColor: "#eee"
                     backgroundColor: "black"
@@ -25,6 +26,7 @@ Item {
         }
 
         TextField {
+            id: field
             style: TextFieldStyle {
                     textColor: "green"
                     background: Rectangle {
@@ -41,6 +43,14 @@ Item {
             height: 25
             x : 10
             y : 447
+
+
+            Keys.onReturnPressed: {
+                    if (event.key === Qt.Key_Return) {
+                        area.append( "> " +field.text)
+                        field.text = "";
+                    }
+                }
         }
 
     }
