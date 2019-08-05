@@ -15,6 +15,13 @@ void GUI::registerObject(QObject *obj, const QString &qmlName)
 
 void GUI::run()
 {
+    auto ctx = engine_.rootContext();
+    ctx->setContextProperty("gui",this);
     engine_.load("qrc:/main.qml");
-    engine_.rootObjects();
+}
+
+void GUI::receive_string(QString string)
+{
+    qDebug() << string;
+    emit change_cell(QColor("green"), 1);
 }

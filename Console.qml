@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+
 Item {
     Rectangle
     {
@@ -44,14 +45,13 @@ Item {
             x : 10
             y : 447
 
-
             Keys.onReturnPressed: {
                     if (event.key === Qt.Key_Return) {
                         area.append( "> " +field.text)
+                        gui.receive_string(field.text)
                         field.text = "";
                     }
                 }
         }
-
     }
 }

@@ -20,6 +20,14 @@ Window {
         id : map_main
         x:400
         y:0
+        Connections
+        {
+            target: gui
+            onChange_cell :
+            {
+                map_main.change_cell(my_color, id)
+            }
+        }
     }
 
     Map

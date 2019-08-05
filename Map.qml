@@ -9,6 +9,11 @@ Item {
 
     }
 
+    function change_cell(my_color, id)
+    {
+        grid_repeater.itemAt(id).change_color(my_color)
+    }
+
     Rectangle
     {
         x:20
@@ -20,11 +25,23 @@ Item {
             anchors.fill: parent
             rows: 8; columns: 8;
             Repeater {
+                    id: grid_repeater
                     model: 64
                     Rectangle {
-                        width: 23; height: 23
+                        width: 23; height: width
                         border.width: 1
                         color: "white"
+                        function change_color(new_color)
+                        {
+                            element.color = new_color
+                        }
+                        Rectangle {
+                            id: element
+                            anchors.centerIn: parent
+                            width: parent.width*0.8
+                            height: width
+                            color: "transparent"
+                        }
                     }
                 }
             }
