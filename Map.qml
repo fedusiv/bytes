@@ -9,9 +9,13 @@ Item {
 
     }
 
-    function change_cell(my_color, id)
+    function change_cell_content(my_color, id)
     {
         grid_repeater.itemAt(id).change_color(my_color)
+    }
+    function change_cell(my_color, id)
+    {
+        grid_repeater.itemAt(id).color = my_color
     }
 
     Rectangle
@@ -38,7 +42,7 @@ Item {
                         Rectangle {
                             id: element
                             anchors.centerIn: parent
-                            width: parent.width*0.8
+                            width: parent.width*0.75
                             height: width
                             color: "transparent"
                         }

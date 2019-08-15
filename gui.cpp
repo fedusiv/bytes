@@ -22,6 +22,7 @@ void GUI::run()
 
 void GUI::receive_string(QString string)
 {
-    qDebug() << string;
-    emit change_cell(QColor("green"), 1);
+    emit receive_command(string);
 }
+
+

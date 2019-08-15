@@ -13,6 +13,14 @@ Window {
     Console
     {
         id : console_
+        Connections
+        {
+            target: gui
+            onAppend_string :
+            {
+                console_.append_text(string)
+            }
+        }
     }
 
     Map
@@ -23,10 +31,16 @@ Window {
         Connections
         {
             target: gui
-            onChange_cell :
+            onChange_cell_content :
             {
-                map_main.change_cell(my_color, id)
+                map_main.change_cell_content(my_color, id)
+
             }
+        }
+        Rectangle
+        {
+            anchors.bottom: parent.bottom
+
         }
     }
 
@@ -35,6 +49,14 @@ Window {
         id : map_debug
         x:400
         y:240
+        Connections
+        {
+            target: gui
+            onChange_cell_content_d :
+            {
+                map_main.change_cell_content(my_color, id)
+            }
+        }
     }
 
     title: qsTr("Bytes")

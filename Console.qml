@@ -9,6 +9,11 @@ Item {
         height: 480
         color: "grey"
 
+        function append_text(string)
+        {
+            area.append(string)
+        }
+
         TextArea
         {
             id : area

@@ -18,7 +18,8 @@ SOURCES += \
         gamemanager.cpp \
         gui.cpp \
         main.cpp \
-        socket.cpp
+        socket.cpp \
+        terminal.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,4 +38,5 @@ HEADERS += \
     gamemanager.h \
     gui.h \
     return_codes.h \
-    socket.h
+    socket.h \
+    terminal.h
