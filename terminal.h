@@ -6,6 +6,7 @@
 enum CommandsEnum
 {
     Help,
+    Clean,
     Bot,
     Scanner,
     Virus,
@@ -15,6 +16,7 @@ enum CommandsEnum
 static QString CommandsNames[]=
 {
     "help",
+    "clean",
     "bot",
     "scan",
     "virus"
@@ -23,6 +25,7 @@ static QString CommandsNames[]=
 enum class CommandType
 {
     HELP,
+    CLEAN,
     ADD_BOT,
     ADD_BOT_ADD_BOT_DEBUG,
     ADD_BOT_DEBUG,

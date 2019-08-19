@@ -20,6 +20,10 @@ Window {
             {
                 console_.append_text(string)
             }
+            onClean_terminal:
+            {
+                console_.clear_terminal()
+            }
         }
     }
 

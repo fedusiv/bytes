@@ -3,17 +3,21 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Item {
+    function append_text(string)
+    {
+        area.append(string)
+    }
+
+    function clear_terminal()
+    {
+        area.remove(0,area.length)
+    }
+
     Rectangle
     {
         width: 400
         height: 480
         color: "grey"
-
-        function append_text(string)
-        {
-            area.append(string)
-        }
-
         TextArea
         {
             id : area

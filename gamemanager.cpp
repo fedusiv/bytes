@@ -10,5 +10,11 @@ GameManager::GameManager()
 
 void GameManager::process_command(CommandDescription desc)
 {
+    if( desc.type == CommandType::CLEAN)
+    {
+        emit gui_.clean_terminal();
+        return;
+    }
+
     emit gui_.append_string(desc.string);
 }

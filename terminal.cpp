@@ -26,5 +26,16 @@ void Terminal::parse_command(QString command)
         desc.type = CommandType::UNRECOGNISED;
         desc.string = tmp_unrec;
         emit command_ready(desc);
+        return;
     }
+
+    if ( _command == CommandsEnum::Clean)
+    {
+        //clean
+        CommandDescription desc;
+        desc.type = CommandType::CLEAN;
+        emit command_ready(desc);
+        return;
+    }
+
 }

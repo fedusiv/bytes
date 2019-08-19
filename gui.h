@@ -26,6 +26,8 @@ signals:
     void receive_command(QString command);
     // signal to send string to console
     void append_string(QString string);
+    // signal to clean terminal
+    void clean_terminal();
 
 private:
     QQmlApplicationEngine engine_;
