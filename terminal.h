@@ -3,10 +3,13 @@
 
 #include <QObject>
 
+
+
 enum CommandsEnum
 {
     Help,
     Clean,
+    Debug,
     Bot,
     Scanner,
     Virus,
@@ -17,6 +20,7 @@ static QString CommandsNames[]=
 {
     "help",
     "clean",
+    "debug",
     "bot",
     "scan",
     "virus"
@@ -26,6 +30,7 @@ enum class CommandType
 {
     HELP,
     CLEAN,
+    DEBUG_MODE,
     ADD_BOT,
     ADD_BOT_ADD_BOT_DEBUG,
     ADD_BOT_DEBUG,
@@ -54,7 +59,10 @@ public slots:
 
 
 private:
-    QString const tmp_unrec = "Unrecognised command please enter <help>";
+    QString const tmp_unrec ="Unrecognised command please enter <help>";
+    QString const tmp_help =
+           "clean - remove everything from terminal\n\
+debug - on|off debug mode";
 };
 
 #endif // TERMINAL_H

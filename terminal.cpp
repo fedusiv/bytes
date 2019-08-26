@@ -38,4 +38,13 @@ void Terminal::parse_command(QString command)
         return;
     }
 
+    if ( _command == CommandsEnum::Help)
+    {
+        CommandDescription desc;
+        desc.type = CommandType::HELP;
+        desc.string = tmp_help;
+        emit command_ready(desc);
+        return;
+    }
+
 }
