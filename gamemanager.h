@@ -5,6 +5,8 @@
 #include <terminal.h>
 #include <QObject>
 
+
+
 class GameManager : public QObject
 {
     Q_OBJECT
@@ -16,6 +18,10 @@ private:
 
     bool debug_mode_ = false;       // flag display is debug mode enabled
     bool repeat_mode_ = true;      // flag display repeat mode
+
+    void process_command_bot_add(CommandDescription desc);
+
+
 
 private slots:
     void process_command(CommandDescription desc);
