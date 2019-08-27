@@ -74,12 +74,12 @@ void Terminal::parse_command(QString command)
         {
             desc.string = tmp_repeat_mode_off;
             repeat_mode_ = false;
-            desc.debug = repeat_mode_;
+            desc.repeat = repeat_mode_;
         }else
         {
             desc.string = tmp_repeat_mode_on;
             repeat_mode_ = true;
-            desc.debug = repeat_mode_;
+            desc.repeat = repeat_mode_;
         }
         emit command_ready(desc);
         return;
@@ -103,11 +103,16 @@ QString Terminal::add_digits_to_string(int x, int y)
 
 void Terminal::parse_command_bot(QStringList list)
 {
-    uint8_t digit_cmd = 0;
+    bool digit_part = false;
     CommandDescription desc;
     CommandsOptionsEnum cmd = CommandsOptionsEnum::SizeOptionsEnum;
     for ( QString c : list)
     {
+        if ( digit_part)
+        {
+            continue;
+        }
+
         int pos = CommandsOptions.indexOf(c);
         if ( pos != -1)
         {
@@ -115,70 +120,16 @@ void Terminal::parse_command_bot(QStringList list)
         }
         else
         {
-            if ( digit_cmd > 0 )
-            {
-                // digit values
-                int axis = c.toInt();
-                if ( axis < 0 || axis > MAP_SIZE)
-                {
-                    // unrecognised
-                    desc.type = CommandType::UNRECOGNISED;
-                    desc.string = tmp_unrec_digit;
-                    emit command_ready(desc);
-                    return;
-                }
-                else
-                {
-                    // y axis ( second value)
-                    if ( digit_cmd == 2)
-                    {
-                        desc.y = axis;
-                        digit_cmd = 0;
-                    }
-                    // x axis ( first value)
-                    if ( digit_cmd == 1)
-                    {
-                        desc.x = axis;
-                        digit_cmd++;
-                    }
-                }
-            }
-            else
-            {
-                // unrecognised
-                desc.type = CommandType::UNRECOGNISED;
-                desc.string = tmp_unrec;
-                emit command_ready(desc);
-                return;
-            }
+            // unrecognised
+            desc.type = CommandType::UNRECOGNISED;
+            desc.string = tmp_unrec;
+            emit command_ready(desc);
+            return;
         }
 
-        if ( cmd == CommandsOptionsEnum::Add)
-        {
-            digit_cmd = 1;
-            desc.type = CommandType::BOT_ADD;
-            desc.string = tmp_bot_add;
-        }
 
-        if ( cmd == CommandsOptionsEnum::Debug_option)
-        {
-            if ( desc.type ==CommandType::BOT_ADD)
-            {
-                desc.type = CommandType::BOT_ADD_DEBUG;
-                desc.string = tmp_bot_add_d;
-            }
-        }
-
-        if ( cmd == CommandsOptionsEnum::Repeat_option)
-        {
-            if ( desc.type ==CommandType::BOT_ADD)
-            {
-                desc.type = CommandType::BOT_ADD_REPEAT;
-                desc.string = tmp_bot_add_r;
-            }
-        }
 
     }
-    emit command_ready(desc);
+
 
 }

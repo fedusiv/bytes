@@ -46,6 +46,7 @@ struct CommandDescription
     int x;
     int y;
     bool debug;
+    bool repeat;
     QString string;
 };
 

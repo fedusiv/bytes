@@ -40,7 +40,7 @@ void GameManager::process_command(CommandDescription desc)
 
     if ( desc.type == CommandType::REPEAT_MODE)
     {
-        repeat_mode_ = desc.debug;
+        repeat_mode_ = desc.repeat;
     }
 
 
