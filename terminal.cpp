@@ -18,11 +18,11 @@ void Terminal::parse_command(QString command)
             break;
         }
     }
+    CommandDescription desc;
 
     if ( _command == CommandsEnum::SizeCommandsList)
     {
         //unrecognised
-        CommandDescription desc;
         desc.type = CommandType::UNRECOGNISED;
         desc.string = tmp_unrec;
         emit command_ready(desc);
@@ -32,7 +32,6 @@ void Terminal::parse_command(QString command)
     if ( _command == CommandsEnum::Clean)
     {
         //clean
-        CommandDescription desc;
         desc.type = CommandType::CLEAN;
         emit command_ready(desc);
         return;
@@ -40,11 +39,53 @@ void Terminal::parse_command(QString command)
 
     if ( _command == CommandsEnum::Help)
     {
-        CommandDescription desc;
         desc.type = CommandType::HELP;
         desc.string = tmp_help;
         emit command_ready(desc);
         return;
     }
+
+
+
+    if ( _command == CommandsEnum::Debug)
+    {
+        // set to debug mode
+        desc.type = CommandType::DEBUG_MODE;
+        if ( debug_mode_ )
+        {
+            desc.string = tmp_debug_mode_off;
+            debug_mode_ = false;
+            desc.status = debug_mode_;
+        }else
+        {
+            desc.string = tmp_debug_mode_on;
+            debug_mode_ = true;
+            desc.status = debug_mode_;
+        }
+        emit command_ready(desc);
+        return;
+    }
+
+    if ( _command == CommandsEnum::Repeat)
+    {
+        // set to debug mode
+        desc.type = CommandType::REPEAT_MODE;
+        if ( repeat_mode_ )
+        {
+            desc.string = tmp_repeat_mode_off;
+            repeat_mode_ = false;
+            desc.status = repeat_mode_;
+        }else
+        {
+            desc.string = tmp_repeat_mode_on;
+            repeat_mode_ = true;
+            desc.status = repeat_mode_;
+        }
+        emit command_ready(desc);
+        return;
+    }
+
+
+
 
 }

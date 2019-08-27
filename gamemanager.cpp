@@ -16,5 +16,16 @@ void GameManager::process_command(CommandDescription desc)
         return;
     }
 
+    if ( desc.type == CommandType::DEBUG_MODE)
+    {
+        debug_mode_ = desc.status;
+    }
+
+    if ( desc.type == CommandType::REPEAT_MODE)
+    {
+        debug_mode_ = desc.status;
+    }
+
+
     emit gui_.append_string(desc.string);
 }

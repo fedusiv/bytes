@@ -14,6 +14,9 @@ private:
     GUI gui_;
     Terminal terminal_;
 
+    bool debug_mode_ = false;       // flag display is debug mode enabled
+    bool repeat_mode_ = true;      // flag display repeat mode
+
 private slots:
     void process_command(CommandDescription desc);
 };
