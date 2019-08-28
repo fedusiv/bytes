@@ -35,8 +35,6 @@ enum class CommandType
     DEBUG_MODE,
     REPEAT_MODE,
     BOT_ADD,
-    BOT_ADD_DEBUG,  // add in debug mode
-    BOT_ADD_REPEAT,  // add with repeat
     UNRECOGNISED
 };
 
@@ -74,15 +72,17 @@ class Terminal : public QObject
 
 public:
     Terminal();
-
+    QString bot_string(CommandDescription desc);
 
 signals:
     void command_ready(CommandDescription desc);
 public slots:
     void parse_command(QString command);
-    QString add_digits_to_string(int x, int y);
+
+
 
 private:
+    QString add_digits_to_string(int x, int y);
 
     bool debug_mode_ = false;
     bool repeat_mode_ = true;

@@ -5,6 +5,23 @@ Terminal::Terminal()
 
 }
 
+QString Terminal::bot_string(CommandDescription desc)
+{
+    if ( desc.debug )
+    {
+        return  tmp_bot_add_d + add_digits_to_string(desc.x, desc.y);
+    }
+
+    if ( desc.repeat )
+    {
+        return  tmp_bot_add_r + add_digits_to_string(desc.x, desc.y);
+    }
+
+    return desc.string + add_digits_to_string(desc.x, desc.y);
+
+
+}
+
 void Terminal::parse_command(QString command)
 {
     QStringList list = command.split(' ');
@@ -51,17 +68,7 @@ void Terminal::parse_command(QString command)
     {
         // set to debug mode
         desc.type = CommandType::DEBUG_MODE;
-        if ( debug_mode_ )
-        {
-            desc.string = tmp_debug_mode_off;
-            debug_mode_ = false;
-            desc.debug = debug_mode_;
-        }else
-        {
-            desc.string = tmp_debug_mode_on;
-            debug_mode_ = true;
-            desc.debug = debug_mode_;
-        }
+        desc.debug = debug_mode_;
         emit command_ready(desc);
         return;
     }
@@ -70,17 +77,7 @@ void Terminal::parse_command(QString command)
     {
         // set to repeat mode
         desc.type = CommandType::REPEAT_MODE;
-        if ( repeat_mode_ )
-        {
-            desc.string = tmp_repeat_mode_off;
-            repeat_mode_ = false;
-            desc.repeat = repeat_mode_;
-        }else
-        {
-            desc.string = tmp_repeat_mode_on;
-            repeat_mode_ = true;
-            desc.repeat = repeat_mode_;
-        }
+        desc.repeat = true;
         emit command_ready(desc);
         return;
     }
@@ -88,6 +85,7 @@ void Terminal::parse_command(QString command)
 
     if ( _command == CommandsEnum::Bot)
     {
+        // Bot
         list.removeFirst();
         parse_command_bot(list);
         return;
@@ -104,12 +102,34 @@ QString Terminal::add_digits_to_string(int x, int y)
 void Terminal::parse_command_bot(QStringList list)
 {
     bool digit_part = false;
+    uint8_t digit_counter = 0;
     CommandDescription desc;
     CommandsOptionsEnum cmd = CommandsOptionsEnum::SizeOptionsEnum;
     for ( QString c : list)
     {
         if ( digit_part)
         {
+            digit_counter++;
+            int axis = c.toInt();
+            if ( axis >= 1 && axis <= MAP_SIZE )
+            {
+                if ( digit_counter == 1)
+                {
+                    desc.x = axis;
+                }
+                if ( digit_counter == 2)
+                {
+                    desc.y = axis;
+                    digit_part = false;
+                }
+            }else
+            {
+                desc.type = CommandType::UNRECOGNISED;
+                desc.string = tmp_unrec_digit + " ( " + c + " ) ?";
+                emit command_ready(desc);
+                return;
+            }
+
             continue;
         }
 
@@ -122,12 +142,28 @@ void Terminal::parse_command_bot(QStringList list)
         {
             // unrecognised
             desc.type = CommandType::UNRECOGNISED;
-            desc.string = tmp_unrec;
+            desc.string = tmp_unrec + " ( " + c + " ) ?";
             emit command_ready(desc);
             return;
         }
 
 
+        if ( pos == CommandsOptionsEnum::Add)
+        {
+            digit_part = true;
+            desc.type = CommandType::BOT_ADD;
+            desc.string = tmp_bot_add;
+        }
+
+        if ( pos == CommandsOptionsEnum::Debug_option)
+        {
+            desc.debug = true;
+        }
+
+        if ( pos == CommandsOptionsEnum::Repeat_option)
+        {
+            desc.repeat = true;
+        }
 
     }
 

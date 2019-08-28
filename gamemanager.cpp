@@ -44,7 +44,7 @@ void GameManager::process_command(CommandDescription desc)
     }
 
 
-    if ( desc.type >= CommandType::BOT_ADD && desc.type <= CommandType::BOT_ADD_REPEAT)
+    if ( desc.type == CommandType::BOT_ADD )
     {
         process_command_bot_add(desc);
         return;
@@ -57,30 +57,9 @@ void GameManager::process_command(CommandDescription desc)
 
 void GameManager::process_command_bot_add(CommandDescription desc)
 {
-
-    if ( desc.type == CommandType::DEBUG_MODE)
+    if ( debug_mode_ || desc.debug)
     {
-        desc.string += terminal_.add_digits_to_string(desc.x, desc.y);
-        emit gui_.append_string(desc.string);
-        emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), (desc.x * desc.y - 1));
-        return;
-    }
-
-    if ( desc.type == CommandType::REPEAT_MODE )
-    {
-        // add to main
-        qDebug()<<"Send to server";
-
-
-        desc.string += terminal_.add_digits_to_string(desc.x, desc.y);
-        emit gui_.append_string(desc.string);
-        emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), (desc.x * desc.y - 1));
-        return;
-    }
-
-    if ( debug_mode_)
-    {
-        desc.string += " In debug mode " + terminal_.add_digits_to_string(desc.x, desc.y);
+        desc.string = terminal_.bot_string(desc);
         emit gui_.append_string(desc.string);
         emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), (desc.x * desc.y - 1));
         return;
@@ -90,15 +69,11 @@ void GameManager::process_command_bot_add(CommandDescription desc)
     {
         // add to main
         qDebug()<<"Send to server";
-
-        desc.string += " And repeat to debug map " + terminal_.add_digits_to_string(desc.x, desc.y);
+        desc.string = terminal_.bot_string(desc);
         emit gui_.append_string(desc.string);
         emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), (desc.x * desc.y - 1));
         return;
     }
 
-    // add to main
-    qDebug()<<"Send to server";
-    desc.string += terminal_.add_digits_to_string(desc.x, desc.y);
-    emit gui_.append_string(desc.string);
+
 }
