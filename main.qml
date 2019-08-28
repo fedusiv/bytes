@@ -58,7 +58,7 @@ Window {
             target: gui
             onChange_cell_content_d :
             {
-                map_main.change_cell_content(my_color, id)
+                map_debug.change_cell_content(my_color, id)
             }
         }
     }

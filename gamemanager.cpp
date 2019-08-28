@@ -35,12 +35,14 @@ void GameManager::process_command(CommandDescription desc)
 
     if ( desc.type == CommandType::DEBUG_MODE)
     {
-        debug_mode_ = desc.debug;
+        debug_mode_ = !debug_mode_;
+        desc.string = terminal_.debug_mode_string(debug_mode_);
     }
 
     if ( desc.type == CommandType::REPEAT_MODE)
     {
-        repeat_mode_ = desc.repeat;
+        repeat_mode_ = !repeat_mode_;
+        desc.string = terminal_.repeat_mode_string(repeat_mode_);
     }
 
 
@@ -61,19 +63,19 @@ void GameManager::process_command_bot_add(CommandDescription desc)
     {
         desc.string = terminal_.bot_string(desc);
         emit gui_.append_string(desc.string);
-        emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), (desc.x * desc.y - 1));
+        emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), ( (desc.y -1) * 8 + desc.x - 1));
         return;
     }
 
-    if ( repeat_mode_ )
+    if ( repeat_mode_ || desc.repeat )
     {
         // add to main
         qDebug()<<"Send to server";
         desc.string = terminal_.bot_string(desc);
         emit gui_.append_string(desc.string);
-        emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), (desc.x * desc.y - 1));
+        emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), ( (desc.y -1) * 8 + desc.x - 1));
         return;
     }
 
-
+    qDebug()<<"Send to server";
 }

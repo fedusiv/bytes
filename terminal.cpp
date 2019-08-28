@@ -22,6 +22,24 @@ QString Terminal::bot_string(CommandDescription desc)
 
 }
 
+QString Terminal::debug_mode_string(bool mode)
+{
+    if ( mode )
+    {
+        return  tmp_debug_mode_on;
+    }
+    return  tmp_debug_mode_off;
+}
+
+QString Terminal::repeat_mode_string(bool mode)
+{
+    if ( mode )
+    {
+        return  tmp_repeat_mode_on;
+    }
+    return  tmp_repeat_mode_off;
+}
+
 void Terminal::parse_command(QString command)
 {
     QStringList list = command.split(' ');
@@ -36,6 +54,7 @@ void Terminal::parse_command(QString command)
         }
     }
     CommandDescription desc;
+    command_desc_clear(&desc);
 
     if ( _command == CommandsEnum::SizeCommandsList)
     {
@@ -68,7 +87,7 @@ void Terminal::parse_command(QString command)
     {
         // set to debug mode
         desc.type = CommandType::DEBUG_MODE;
-        desc.debug = debug_mode_;
+        desc.debug = true;
         emit command_ready(desc);
         return;
     }
@@ -99,11 +118,20 @@ QString Terminal::add_digits_to_string(int x, int y)
     return "  at x: " + QString::number(x) + " y: " + QString::number(y);
 }
 
+void Terminal::command_desc_clear(CommandDescription *desc)
+{
+    desc->x = 0;
+    desc->y = 0;
+    desc->debug = false;
+    desc->repeat = false;
+}
+
 void Terminal::parse_command_bot(QStringList list)
 {
     bool digit_part = false;
     uint8_t digit_counter = 0;
     CommandDescription desc;
+    command_desc_clear(&desc);
     CommandsOptionsEnum cmd = CommandsOptionsEnum::SizeOptionsEnum;
     for ( QString c : list)
     {
@@ -166,6 +194,7 @@ void Terminal::parse_command_bot(QStringList list)
         }
 
     }
+    emit command_ready(desc);
 
 
 }

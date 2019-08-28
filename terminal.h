@@ -73,6 +73,8 @@ class Terminal : public QObject
 public:
     Terminal();
     QString bot_string(CommandDescription desc);
+    QString debug_mode_string(bool mode);
+    QString repeat_mode_string(bool mode);
 
 signals:
     void command_ready(CommandDescription desc);
@@ -83,7 +85,7 @@ public slots:
 
 private:
     QString add_digits_to_string(int x, int y);
-
+    void command_desc_clear(CommandDescription * desc);
     bool debug_mode_ = false;
     bool repeat_mode_ = true;
 
