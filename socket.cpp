@@ -1,5 +1,5 @@
 #include "socket.h"
-
+#include <QDebug>
 Socket::Socket()
 {
     socket_ = new QTcpSocket(this);
@@ -23,9 +23,14 @@ ConnectionStatus Socket::connect_run(QString ip, QString port)
     return  ConnectionStatus::Connected;
 }
 
+void Socket::send_command(CommandDescription desc)
+{
+    Q_UNUSED(desc);
+}
+
 void Socket::connected()
 {
-
+    qDebug() << "Connected";
 }
 
 void Socket::disconnected()

@@ -81,7 +81,14 @@ void Terminal::parse_command(QString command)
         return;
     }
 
-
+    if ( _command == CommandsEnum::Start)
+    {
+        // starting game send ready signal
+        desc.type = CommandType::START;
+        desc.string = tmp_start;
+        emit command_ready(desc);
+        return;
+    }
 
     if ( _command == CommandsEnum::Debug)
     {
@@ -109,6 +116,15 @@ void Terminal::parse_command(QString command)
         parse_command_bot(list);
         return;
     }
+
+    if ( _command == CommandsEnum::Connect)
+    {
+        //Connect to server
+        parse_connect_to_server(list);
+        return;
+    }
+
+
 
 
 }
@@ -197,4 +213,20 @@ void Terminal::parse_command_bot(QStringList list)
     emit command_ready(desc);
 
 
+}
+
+void Terminal::parse_connect_to_server(QStringList list)
+{
+   CommandDescription desc;
+   desc.type = CommandType::CONNECT;
+   if ( list.size() != 2)
+   {
+       desc.type = CommandType::UNRECOGNISED;
+       desc.string = "Wrong syntax";
+   }
+   else
+   {
+        desc.string = "Connecting to " + list.at(1);
+   }
+   emit command_ready(desc);
 }

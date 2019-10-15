@@ -5,12 +5,14 @@
 #include "return_codes.h"
 #include <QObject>
 #include <QHostAddress>
+#include "terminal.h"
 
 class Socket : public QObject
 {
 public:
     Socket();
     ConnectionStatus connect_run(QString ip, QString port);
+    void send_command(CommandDescription desc);
 private:
     QTcpSocket* socket_;
 

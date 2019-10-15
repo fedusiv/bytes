@@ -45,12 +45,18 @@ void GameManager::process_command(CommandDescription desc)
         desc.string = terminal_.repeat_mode_string(repeat_mode_);
     }
 
-
     if ( desc.type == CommandType::BOT_ADD )
     {
         process_command_bot_add(desc);
         return;
     }
+
+    if ( desc.type == CommandType::CONNECT )
+    {
+        process_connect_to_server(desc);
+        return;
+    }
+
 
     emit gui_.append_string(desc.string);
 }
@@ -69,13 +75,18 @@ void GameManager::process_command_bot_add(CommandDescription desc)
 
     if ( repeat_mode_ || desc.repeat )
     {
-        // add to main
-        qDebug()<<"Send to server";
+
         desc.string = terminal_.bot_string(desc);
         emit gui_.append_string(desc.string);
         emit gui_.change_cell_content_d(QVariant(cell::content_colors[cell::content_names::Bot]), ( (desc.y -1) * 8 + desc.x - 1));
         return;
     }
 
-    qDebug()<<"Send to server";
+    desc.string = terminal_.bot_string(desc);
+    emit gui_.append_string(desc.string);
+}
+
+void GameManager::process_connect_to_server(CommandDescription desc)
+{
+    socket_.connect_run(desc.ip, "8080");
 }

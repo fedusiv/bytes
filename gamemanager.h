@@ -3,6 +3,7 @@
 
 #include <gui.h>
 #include <terminal.h>
+#include <socket.h>
 #include <QObject>
 
 
@@ -15,12 +16,13 @@ public:
 private:
     GUI gui_;
     Terminal terminal_;
+    Socket socket_;
 
     bool debug_mode_ = false;       // flag display is debug mode enabled
     bool repeat_mode_ = true;      // flag display repeat mode
 
     void process_command_bot_add(CommandDescription desc);
-
+    void process_connect_to_server(CommandDescription desc);
 
 
 private slots:

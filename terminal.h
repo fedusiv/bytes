@@ -9,11 +9,13 @@ enum CommandsEnum
 {
     Help,
     Clean,
+    Start,
     Debug,
     Repeat,
     Bot,
     Scanner,
     Virus,
+    Connect,
     SizeCommandsList
 };
 
@@ -21,20 +23,24 @@ static QString CommandsNames[]=
 {
     "help",
     "clean",
+    "start",
     "debug",
     "repeat",
     "bot",
     "scan",
-    "virus"
+    "virus",
+    "connect"
 };
 
 enum class CommandType
 {
     HELP,
     CLEAN,
+    START,
     DEBUG_MODE,
     REPEAT_MODE,
     BOT_ADD,
+    CONNECT,
     UNRECOGNISED
 };
 
@@ -46,6 +52,7 @@ struct CommandDescription
     bool debug;
     bool repeat;
     QString string;
+    QString ip;
 };
 
 
@@ -90,7 +97,7 @@ private:
     bool repeat_mode_ = true;
 
     void parse_command_bot(QStringList list);
-
+    void parse_connect_to_server(QStringList list);
     // this is really temporary. I hope
     QString const tmp_unrec ="Unrecognised command please enter <help>";
     QString const tmp_unrec_digit="Unrecognised digit values";
@@ -106,6 +113,7 @@ bot - operation with unit: bot";
     QString tmp_bot_add = "Add bot";
     QString tmp_bot_add_d = "Add bot in debug mode";
     QString tmp_bot_add_r = "Add bot with repeat to debug map";
+    QString tmp_start = "Sending ready signal to start game";
 
 };
 
